@@ -5,4 +5,4 @@ function createPromise(position, delay) {
   } else {
     // Reject
   }
-}
+};
