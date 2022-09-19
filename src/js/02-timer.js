@@ -10,6 +10,7 @@ const timeSecondsRef = document.querySelector('span[data-seconds]')
 let selectedTimeMs = null;
 let timerInterval;
 btnStart.disabled = true;
+
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -31,16 +32,17 @@ const options = {
     }
   },
 };
+
 let selectedDay = flatpickr(inputRef, options)
+
 btnStart.addEventListener('click', onBtnStartClick);
 
 function onBtnStartClick(event) {
   btnStart.disabled = true
   let deltaTime = selectedTimeMs - Date.now();
-  console.log(deltaTime)
-  const { days, hours, minutes, seconds } = convertMs(deltaTime);
   
   timerInterval = setInterval(() => {
+    const { days, hours, minutes, seconds } = convertMs(deltaTime);
     timeDaysRef.textContent = addLeadingZero(days);
     timeHoursRef.textContent = addLeadingZero(hours);
     timeMinutesRef.textContent = addLeadingZero(minutes);
