@@ -15,6 +15,13 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
+  onOpen() {
+    timerInterval && clearInterval(timerInterval);
+    timeDaysRef.textContent = '00'
+    timeHoursRef.textContent = '00'
+    timeMinutesRef.textContent = '00'
+    timeSecondsRef.textContent = '00'
+  },
   onClose(selectedDates) {
     if (selectedDates[0] < new Date()) {
       alert('Please choose a date in the future')
