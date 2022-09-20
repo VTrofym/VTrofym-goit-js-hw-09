@@ -44,11 +44,13 @@ function updateTimer({ days = '00', hours = '00', minutes = '00', seconds = '00'
 function onBtnStartClick(event) {
   btnStart.disabled = true
   let deltaTime = selectedTimeMs - Date.now();
-  
   timerInterval = setInterval(() => {
     const time = convertMs(deltaTime);
     updateTimer(time);
     deltaTime -= 1000;
+    if (deltaTime < 0) {
+    clearInterval(timerInterval);
+  }
   }, 1000)
 }
 
