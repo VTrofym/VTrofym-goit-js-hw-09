@@ -18,10 +18,7 @@ const options = {
   minuteIncrement: 1,
   onOpen() {
     timerInterval && clearInterval(timerInterval);
-    timeDaysRef.textContent = '00'
-    timeHoursRef.textContent = '00'
-    timeMinutesRef.textContent = '00'
-    timeSecondsRef.textContent = '00'
+    updateTimer();
   },
   onClose(selectedDates) {
     if (selectedDates[0] < new Date()) {
@@ -37,16 +34,20 @@ let selectedDay = flatpickr(inputRef, options)
 
 btnStart.addEventListener('click', onBtnStartClick);
 
+function updateTimer({ days = '00', hours = '00', minutes = '00', seconds = '00'} = {}) {
+  timeDaysRef.textContent = addLeadingZero(days);
+    timeHoursRef.textContent = addLeadingZero(hours);
+    timeMinutesRef.textContent = addLeadingZero(minutes);
+    timeSecondsRef.textContent = addLeadingZero(seconds);
+}
+
 function onBtnStartClick(event) {
   btnStart.disabled = true
   let deltaTime = selectedTimeMs - Date.now();
   
   timerInterval = setInterval(() => {
-    const { days, hours, minutes, seconds } = convertMs(deltaTime);
-    timeDaysRef.textContent = addLeadingZero(days);
-    timeHoursRef.textContent = addLeadingZero(hours);
-    timeMinutesRef.textContent = addLeadingZero(minutes);
-    timeSecondsRef.textContent = addLeadingZero(seconds);
+    const time = convertMs(deltaTime);
+    updateTimer(time);
     deltaTime -= 1000;
   }, 1000)
 }
